@@ -45,7 +45,7 @@ const converterOptions = {
             '.OBSERVE FREQUENCY': observeFrequency,
             '.OBSERVE NUCLEUS': nucleus[0],
           },
-          meta: {},
+          meta,
           isXYData: true,
           isNMR: true,
         };
