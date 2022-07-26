@@ -7,7 +7,8 @@ const { convertFileList, groupByExperiments } = require('brukerconverter');
 const { fromVariables } = require('convert-to-jcamp');
 const { xMultiply } = require('ml-spectra-processing');
 
-const pathToWrite = '/home/abolanos/';
+const pathToWrite = '';
+const pathToRead = '';
 
 const converterOptions = {
   converter: { xy: true },
@@ -20,15 +21,10 @@ const converterOptions = {
 };
 
 (async () => {
-  const fileList = fileListFromPath(join(__dirname, '../data/exam1d_1H'));
+  const fileList = fileListFromPath(pathToRead);
   const experiments = groupByExperiments(fileList, converterOptions.filter);
-
   for (const expno of experiments) {
     const spectra = await convertFileList(expno.fileList);
-    writeFileSync(
-      join(pathToWrite, 'spectraBruker.json'),
-      JSON.stringify(spectra),
-    );
 
     for (const spectrum of spectra) {
       const { source } = spectrum;
@@ -77,7 +73,7 @@ const converterOptions = {
           },
         };
         const jcamp = fromVariables(variables, options);
-        writeFileSync(join(pathToWrite, 'spectraBruker.jdx'), jcamp);
+        writeFileSync(join(pathToWrite,`${source.name}_${source.expno}.jdx`), jcamp);
       }
     }
   }
